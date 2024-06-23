@@ -31,4 +31,8 @@
 
 .restoList {
   display: flex;
+  flex-wrap: wrap;
+
 }
+
+
