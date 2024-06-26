@@ -1,3 +1,4 @@
+import RestoList from "./RestoList";
 import RestoCard from "./RestoCard";
 import { useState } from "react";
 const Body = () => {
@@ -27,12 +28,12 @@ const Body = () => {
       </div>
 
       <div className="restoList">
-        <RestoCard />
-        <RestoCard />
-        <RestoCard />
-        <RestoCard />
-        <RestoCard />
-        <RestoCard />
+        <RestoCard restaurant={RestoList[0]} />
+        <RestoCard restaurant={RestoList[1]} />
+        <RestoCard restaurant={RestoList[2]} />
+        <RestoCard restaurant={RestoList[3]} />
+        <RestoCard restaurant={RestoList[6]} />
+        <RestoCard restaurant={RestoList[5]} />
       </div>
     </>
   );

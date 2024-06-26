@@ -1,4 +1,4 @@
-const BurgerKing = [
+const RestoList = [
   {
     "info": {
         "id": "704921",
@@ -488,4 +488,4 @@ const BurgerKing = [
 }
 ];
 
-export default BurgerKing;
+export default RestoList;
