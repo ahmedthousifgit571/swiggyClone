@@ -28,12 +28,14 @@ const Body = () => {
       </div>
 
       <div className="restoList">
-        <RestoCard restaurant={RestoList[0]} />
-        <RestoCard restaurant={RestoList[1]} />
-        <RestoCard restaurant={RestoList[2]} />
-        <RestoCard restaurant={RestoList[3]} />
-        <RestoCard restaurant={RestoList[6]} />
-        <RestoCard restaurant={RestoList[5]} />
+        {
+          RestoList.map((restaurant=> {
+            {/* The below line is using props that is getting from child component restoCard */}
+            return <RestoCard {...restaurant.info} />   
+            
+          }))
+        }
+       
       </div>
     </>
   );

@@ -1,16 +1,16 @@
-import RestoList from "./RestoList";
-const RestoCard = ({ restaurant }) => {
+const RestoCard = ({ name,cuisines,avgRating,cloudinaryImageId }) => {
+
   return (
     <div className="card">
       <img
         src={
           "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
-          restaurant.info?.cloudinaryImageId
+          cloudinaryImageId
         }
       />
-      <h2>{restaurant.info?.name}</h2>
-      <h3>{restaurant.info?.cuisines.join(", ")}</h3>
-      <h4>{restaurant.info?.avgRating} stars</h4>
+      <h2>{name}</h2>
+      <h3>{cuisines.join(', ')}</h3>
+      <h4>{avgRating} stars</h4>
     </div>
   );
 };
