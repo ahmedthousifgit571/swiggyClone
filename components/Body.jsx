@@ -1,9 +1,19 @@
 import RestoList from "./RestoList";
 import RestoCard from "./RestoCard";
 import { useState } from "react";
+
+// filter function
+function filterdata(searchText, restaurants) {
+  const filteredData = restaurants.filter((restaurant) =>
+    restaurant.info.name.includes(searchText)
+  );
+  return filteredData;
+}
+
 const Body = () => {
-  const [searchText, setSearch] = useState("burger king");
-  const [val, setVal] = useState("false");
+  const [restaurants, setRestaurant] = useState(RestoList);   //to store all the restaurants value in this state
+  const [searchText, setSearch] = useState("");
+
   return (
     <>
       <div className="search-container">
@@ -16,11 +26,14 @@ const Body = () => {
             setSearch(e.target.value);
           }}
         />
-        <h1>{val}</h1>
+
         <button
           className="btn"
           onClick={() => {
-            val === "false" ? setVal("true") : setVal("false");
+            // need to filter the data
+            const data = filterdata(searchText, restaurants);
+            // update the state - restaurants
+            setRestaurant(data);
           }}
         >
           search
@@ -28,14 +41,12 @@ const Body = () => {
       </div>
 
       <div className="restoList">
-        {
-          RestoList.map((restaurant=> {
-            {/* The below line is using props that is getting from child component restoCard */}
-            return <RestoCard {...restaurant.info} />   
-            
-          }))
-        }
-       
+        {restaurants.map((restaurant) => {
+          {
+            /* The below line is using props that is getting from child component restoCard */
+          }
+          return <RestoCard {...restaurant.info} />;
+        })}
       </div>
     </>
   );

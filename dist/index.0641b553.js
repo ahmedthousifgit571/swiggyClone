@@ -27544,10 +27544,15 @@ var _restoCard = require("./RestoCard");
 var _restoCardDefault = parcelHelpers.interopDefault(_restoCard);
 var _react = require("react");
 var _s = $RefreshSig$();
+// filter function
+function filterdata(searchText, restaurants) {
+    const filteredData = restaurants.filter((restaurant)=>restaurant.info.name.includes(searchText));
+    return filteredData;
+}
 const Body = ()=>{
     _s();
-    const [searchText, setSearch] = (0, _react.useState)("burger king");
-    const [val, setVal] = (0, _react.useState)("false");
+    const [restaurants, setRestaurant] = (0, _react.useState)((0, _restoListDefault.default)); //to store all the restaurants value in this state
+    const [searchText, setSearch] = (0, _react.useState)("");
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27563,53 +27568,49 @@ const Body = ()=>{
                         }
                     }, void 0, false, {
                         fileName: "components/Body.jsx",
-                        lineNumber: 9,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                        children: val
-                    }, void 0, false, {
-                        fileName: "components/Body.jsx",
-                        lineNumber: 12,
+                        lineNumber: 15,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "btn",
                         onClick: ()=>{
-                            val === "false" ? setVal("true") : setVal("false");
+                            // need to filter the data
+                            const data = filterdata(searchText, restaurants);
+                            // update the state - restaurants
+                            setRestaurant(data);
                         },
                         children: "search"
                     }, void 0, false, {
                         fileName: "components/Body.jsx",
-                        lineNumber: 13,
+                        lineNumber: 19,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "components/Body.jsx",
-                lineNumber: 8,
+                lineNumber: 14,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "restoList",
-                children: (0, _restoListDefault.default).map((restaurant)=>{
+                children: restaurants.map((restaurant)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restoCardDefault.default), {
                         ...restaurant.info
                     }, void 0, false, {
                         fileName: "components/Body.jsx",
-                        lineNumber: 23,
+                        lineNumber: 34,
                         columnNumber: 16
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "components/Body.jsx",
-                lineNumber: 20,
+                lineNumber: 29,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(Body, "Vc8erUQ2GXcm+5loQojvnxrC7bY=");
+_s(Body, "mQzEhg5v76DCJllU4zLY3KkVD0A=");
 _c = Body;
 exports.default = Body;
 var _c;
