@@ -1,5 +1,6 @@
-import { Title } from "./Title";  // named import
-// Composing components 
+import { Title } from "./Title"; // named import
+
+// Composing components
 const Header = () => {
   return (
     <div className="header">

@@ -1,6 +1,6 @@
 import RestoList from "./RestoList";
 import RestoCard from "./RestoCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // filter function
 function filterdata(searchText, restaurants) {
@@ -11,8 +11,12 @@ function filterdata(searchText, restaurants) {
 }
 
 const Body = () => {
-  const [restaurants, setRestaurant] = useState(RestoList);   //to store all the restaurants value in this state
+  const [restaurants, setRestaurant] = useState(RestoList); //to store all the restaurants value in this state
   const [searchText, setSearch] = useState("");
+
+  useEffect(() => {
+    console.log("changes takes only when searchtext changes / page reloads");
+  }, [restaurants]);
 
   return (
     <>
@@ -45,7 +49,7 @@ const Body = () => {
           {
             /* The below line is using props that is getting from child component restoCard */
           }
-          return <RestoCard {...restaurant.info} />;
+          return <RestoCard {...restaurant.info} key={restaurant.info.id} />;
         })}
       </div>
     </>
