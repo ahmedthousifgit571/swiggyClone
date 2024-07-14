@@ -15,8 +15,16 @@ const Body = () => {
   const [searchText, setSearch] = useState("");
 
   useEffect(() => {
-    console.log("changes takes only when searchtext changes / page reloads");
-  }, [restaurants]);
+    getRestaurant();
+  }, []);
+
+  async function getRestaurant() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = data.json();
+    console.log(json);
+  }
 
   return (
     <>

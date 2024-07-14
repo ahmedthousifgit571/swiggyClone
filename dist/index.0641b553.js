@@ -27554,10 +27554,13 @@ const Body = ()=>{
     const [restaurants, setRestaurant] = (0, _react.useState)((0, _restoListDefault.default)); //to store all the restaurants value in this state
     const [searchText, setSearch] = (0, _react.useState)("");
     (0, _react.useEffect)(()=>{
-        console.log("changes takes only when searchtext changes / page reloads");
-    }, [
-        restaurants
-    ]);
+        getRestaurant();
+    }, []);
+    async function getRestaurant() {
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING");
+        const json = data.json();
+        console.log(json);
+    }
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27573,7 +27576,7 @@ const Body = ()=>{
                         }
                     }, void 0, false, {
                         fileName: "components/Body.jsx",
-                        lineNumber: 18,
+                        lineNumber: 23,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27587,13 +27590,13 @@ const Body = ()=>{
                         children: "search"
                     }, void 0, false, {
                         fileName: "components/Body.jsx",
-                        lineNumber: 22,
+                        lineNumber: 27,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "components/Body.jsx",
-                lineNumber: 17,
+                lineNumber: 22,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27604,7 +27607,7 @@ const Body = ()=>{
                         key: restaurant.info.id,
                         __source: {
                             fileName: "components/Body.jsx",
-                            lineNumber: 37,
+                            lineNumber: 42,
                             columnNumber: 16
                         },
                         __self: undefined
@@ -27612,7 +27615,7 @@ const Body = ()=>{
                 })
             }, void 0, false, {
                 fileName: "components/Body.jsx",
-                lineNumber: 32,
+                lineNumber: 37,
                 columnNumber: 7
             }, undefined)
         ]
