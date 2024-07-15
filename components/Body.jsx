@@ -1,17 +1,18 @@
 import RestoList from "./RestoList";
 import RestoCard from "./RestoCard";
 import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
 // filter function
 function filterdata(searchText, restaurants) {
   const filteredData = restaurants.filter((restaurant) =>
-    restaurant.info.name.includes(searchText)
+    restaurant.data.name.includes(searchText)
   );
   return filteredData;
 }
 
 const Body = () => {
-  const [restaurants, setRestaurant] = useState(RestoList); //to store all the restaurants value in this state
+  const [restaurants, setRestaurant] = useState([]); //to store all the restaurants value in this state
   const [searchText, setSearch] = useState("");
 
   useEffect(() => {
@@ -24,9 +25,11 @@ const Body = () => {
     );
     const json = data.json();
     console.log(json);
+    setRestaurant(json?.data?.cards[2]?.data?.data?.cards);
   }
-
-  return (
+  return restaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -54,10 +57,7 @@ const Body = () => {
 
       <div className="restoList">
         {restaurants.map((restaurant) => {
-          {
-            /* The below line is using props that is getting from child component restoCard */
-          }
-          return <RestoCard {...restaurant.info} key={restaurant.info.id} />;
+          return <RestoCard {...restaurant.data} key={restaurant.data.id} />;
         })}
       </div>
     </>
