@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 // filter function
 function filterdata(searchText, allRestaurants) {
   const filteredData = allRestaurants.filter((restaurant) =>
-    restaurant.info.name.includes(searchText)
+    restaurant?.info?.name?.toLowerCase().includes(searchText)
   );
   return filteredData;
 }
 
 const Body = () => {
-  const [allRestaurants,setallRestaurants] = useState([])
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]); //to store all the restaurants value in this state
+  const [allRestaurants, setallRestaurants] = useState([]); //to store all the restaurants value in this state
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]); //to store all the filtered restaurants value in this state
   const [searchText, setSearch] = useState("");
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const Body = () => {
     const json = await data.json();
     console.log(json);
 
-    // console.log(json.data.cards);
     // optional chaining
     setallRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
@@ -40,8 +39,11 @@ const Body = () => {
 
   console.log("render");
 
+  // early return
+  if (!allRestaurants) return null;
+
   // conditional rendering
-  return filteredRestaurants.length === 0 ? (
+  return allRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <>
@@ -68,11 +70,16 @@ const Body = () => {
         </button>
       </div>
       <div className="restaurantList">
-        {filteredRestaurants.map((restaurant) => {
-          return (
-            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
-          );
-        })}
+        {/* the below line is to tell no match when filtering */}
+        {filteredRestaurants?.length === 0 ? (
+          <h1>filter not found</h1>
+        ) : (
+          filteredRestaurants.map((restaurant) => {
+            return (
+              <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+            );
+          })
+        )}
       </div>
     </>
   );
