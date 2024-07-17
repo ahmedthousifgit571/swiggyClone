@@ -29,7 +29,7 @@
   width: 100%;
 }
 
-.restoList {
+.restaurantList {
   flex-wrap: wrap;
   display: flex;
 }

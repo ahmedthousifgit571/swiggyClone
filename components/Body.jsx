@@ -1,33 +1,47 @@
-import RestoList from "./RestoList";
-import RestoCard from "./RestoCard";
-import { useState, useEffect } from "react";
+import RestaurantCard from "./RestoCard";
 import Shimmer from "./Shimmer";
+import { useState, useEffect } from "react";
 
 // filter function
-function filterdata(searchText, restaurants) {
-  const filteredData = restaurants.filter((restaurant) =>
-    restaurant.data.name.includes(searchText)
+function filterdata(searchText, allRestaurants) {
+  const filteredData = allRestaurants.filter((restaurant) =>
+    restaurant.info.name.includes(searchText)
   );
   return filteredData;
 }
 
 const Body = () => {
-  const [restaurants, setRestaurant] = useState([]); //to store all the restaurants value in this state
+  const [allRestaurants,setallRestaurants] = useState([])
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]); //to store all the restaurants value in this state
   const [searchText, setSearch] = useState("");
 
   useEffect(() => {
-    getRestaurant();
+    getRestaurants(); // API CALL
   }, []);
 
-  async function getRestaurant() {
+  async function getRestaurants() {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
     );
-    const json = data.json();
+    const json = await data.json();
     console.log(json);
-    setRestaurant(json?.data?.cards[2]?.data?.data?.cards);
+
+    // console.log(json.data.cards);
+    // optional chaining
+    setallRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || []
+    );
+    setFilteredRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || []
+    );
   }
-  return restaurants.length === 0 ? (
+
+  console.log("render");
+
+  // conditional rendering
+  return filteredRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <>
@@ -41,27 +55,26 @@ const Body = () => {
             setSearch(e.target.value);
           }}
         />
-
         <button
           className="btn"
           onClick={() => {
             // need to filter the data
-            const data = filterdata(searchText, restaurants);
+            const data = filterdata(searchText, allRestaurants);
             // update the state - restaurants
-            setRestaurant(data);
+            setFilteredRestaurants(data);
           }}
         >
           search
         </button>
       </div>
-
-      <div className="restoList">
-        {restaurants.map((restaurant) => {
-          return <RestoCard {...restaurant.data} key={restaurant.data.id} />;
+      <div className="restaurantList">
+        {filteredRestaurants.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          );
         })}
       </div>
     </>
   );
 };
-
 export default Body;
